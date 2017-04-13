@@ -44,6 +44,37 @@
 
 (defvar ssfs-file-prefix-regexp (concat ".*" (regexp-quote ssfs-file-prefix) ".*"))
 
+(defvar ssfs-mime-types-alist
+  '(("html" . "text/html; charset=iso-8859-1")
+    ("txt"  . "text/plain; charset=iso-8859-1")
+    ("jpg"  . "image/jpeg")
+    ("jpeg" . "image/jpeg")
+    ("gif"  . "image/gif")
+    ("png"  . "image/png")
+    ("tif"  . "image/tiff")
+    ("tiff" . "image/tiff")
+    ("css"  . "text/css")
+    ("gz"   . "application/octet-stream")
+    ("ps"   . "application/postscript")
+    ("pdf"  . "application/pdf")
+    ("eps"  . "application/postscript")
+    ("tar"  . "application/x-tar")
+    ("rpm"  . "application/x-rpm")
+    ("zip"  . "application/zip")
+    ("mp3"  . "audio/mpeg")
+    ("mp2"  . "audio/mpeg")
+    ("mid"  . "audio/midi")
+    ("midi" . "audio/midi")
+    ("wav"  . "audio/x-wav")
+    ("au"   . "audio/basic")
+    ("ram"  . "audio/pn-realaudio")
+    ("ra"   . "audio/x-realaudio")
+    ("mpg"  . "video/mpeg")
+    ("mpeg" . "video/mpeg")
+    ("qt"   . "video/quicktime")
+    ("mov"  . "video/quicktime")
+    ("avi"  . "video/x-msvideo")))
+
 (defmacro with-temp-filebuffer (file &rest body)
   "Open FILE into a temporary buffer execute BODY there like
 `progn', then kill the FILE buffer returning the result of
@@ -58,7 +89,7 @@ evaluating BODY."
        ,temp-result)))
 
 (defun ssfs-mime-type (filename)
-  (or (cdr (assoc (file-name-extension filename) httpd-mime-types-alist))
+  (or (cdr (assoc (file-name-extension filename) ssfs-mime-types-alist))
       "text/plain"))
 
 (defun ssfs-preprocess-dired-mode (html-path)
